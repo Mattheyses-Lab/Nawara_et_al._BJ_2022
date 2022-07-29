@@ -68,11 +68,16 @@ for i = 1:length(ContentInFold)
             
             while stop_it_please == 0
                 
+                Composit_Raw = CompositeRGB(I_488, Colormaps.Cyan, [0 0.3], I_647_raw, Colormaps.Magenta, [0 0.3]);
+                Composit_Data = CompositeRGB(I_488, Colormaps.Cyan,[0 0.3], I_647_data, Colormaps.Magenta, [0 0.3]);
+                Composit_Grid = CompositeRGB(I_488, Colormaps.Cyan,[0 0.3], I_647_grid, Colormaps.Magenta, [0 0.3]);
+                
                 figure('units','normalized','outerposition',[0 0 1 1])
                 tiledlayout(2,3);
-                nexttile; imshowpair(imadjust(I_488), imadjust(I_647_raw), 'ColorChannels', 'green-magenta'); title('Unregistered overlay');
-                nexttile; imshowpair(imadjust(imgaussfilt(I_488,1)), imadjust(I_647_data), 'ColorChannels', 'green-magenta'); title('Data based registration');
-                nexttile; imshowpair(imadjust(imgaussfilt(I_488,1)), imadjust(I_647_grid), 'ColorChannels', 'green-magenta'); title('Grid based registration');
+                
+                nexttile; imshow(Composit_Raw); title('Unregistered overlay');
+                nexttile; imshow(Composit_Data); title('Data based registration');
+                nexttile; imshow(Composit_Grid); title('Grid based registration');
                 nexttile; imshow(double(I_647_raw)./double(I_488), [0 3]); title('Raw 647/488 ratio'); hold on; set(gca,'xticklabel',{[]}); set(gca,'yticklabel',{[]})
                 nexttile; imshow(double(I_647_data)./double(imgaussfilt(I_488,1)), [0 3]); title('Data 647/488 ratio'); hold on; set(gca,'xticklabel',{[]}); set(gca,'yticklabel',{[]})
                 nexttile; imshow(double(I_647_grid)./double(imgaussfilt(I_488,1)), [0 3]); title('Grid 647/488 ratio'); hold on; set(gca,'xticklabel',{[]}); set(gca,'yticklabel',{[]})
