@@ -25,6 +25,7 @@ else
     disp('Platform not supported')
 end
 load('Colormaps.mat')
+assignin('base','Colormaps', Colormaps)
 
 %1 if you want the program to shutdown the computer after completion
 system_shutdown = 0;
