@@ -25,7 +25,7 @@
 %  Changed registration for loop to 3D matrix [05.19.22]
 %  Added data based registtration and manaul registration [06.29.22]
 
-function IMGREG_V2(yourpath, Grid_488_raw, Grid_647_reg)
+function IMGREG_V2(yourpath, Grid_488_raw, Grid_647_reg, Colormaps)
 
 stop_it_please = 0; % while loop for registration
 
