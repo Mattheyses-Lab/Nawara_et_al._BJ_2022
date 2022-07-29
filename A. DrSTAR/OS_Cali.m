@@ -20,25 +20,29 @@ ContentInFold = dir(yourpath);
             
             %Pick 1st ROI then move the same ROI into the matching GRID and then
             %press OK
-            figure(1)
-            imagesc(avg_grid)
-            axis equal
-            roi1 = drawrectangle;
-            roi2 = drawrectangle('Position',[roi1.Position],'StripeColor','r','InteractionsAllowed', 'translate');
-            choice = menu('Press OK after moving the red ROI','OK','Cancel');
-                if choice==2 || choice==0
-                   return;
-                else
-                    roi1.Position = round(roi1.Position);
-                    roi2.Position = round(roi2.Position);
-                    Grid_488_raw = avg_grid(roi1.Position(2):(roi1.Position(2)+roi1.Position(4)),roi1.Position(1):(roi1.Position(1)+roi1.Position(3)));
-                    Grid_647_raw = avg_grid(roi2.Position(2):(roi2.Position(2)+roi2.Position(4)),roi2.Position(1):(roi2.Position(1)+roi2.Position(3)));
-                    save([yourpath, '/', 'Corrections', '/','Grid_488_raw.mat'],'Grid_488_raw');
-                    save([yourpath, '/', 'Corrections', '/','Grid_647_raw.mat'],'Grid_647_raw');
-                    assignin('base','Grid_488_raw', Grid_488_raw)
-                    assignin('base','Grid_647_raw', Grid_647_raw)
-                    % Align the grid, it supports declimals but has to be typed   
-                    OS_Cali_app        
+            draw_ROI = 1;
+            while draw_ROI == 1
+                figure(1)
+                imagesc(avg_grid, [min(avg_grid, [],'all'), max(avg_grid, [],'all')*0.3])
+                axis equal
+                roi1 = drawrectangle;
+                roi2 = drawrectangle('Position',[roi1.Position],'StripeColor','r','InteractionsAllowed', 'translate');
+                choice = menu('Press OK after moving the red ROI','OK','Redraw');
+                    if choice==2 || choice==0
+                       fprintf('Redraw the ROI');
+                    else
+                        draw_ROI = 0;
+                        roi1.Position = round(roi1.Position);
+                        roi2.Position = round(roi2.Position);
+                        Grid_488_raw = avg_grid(roi1.Position(2):(roi1.Position(2)+roi1.Position(4)),roi1.Position(1):(roi1.Position(1)+roi1.Position(3)));
+                        Grid_647_raw = avg_grid(roi2.Position(2):(roi2.Position(2)+roi2.Position(4)),roi2.Position(1):(roi2.Position(1)+roi2.Position(3)));
+                        save([yourpath, '/', 'Corrections', '/','Grid_488_raw.mat'],'Grid_488_raw');
+                        save([yourpath, '/', 'Corrections', '/','Grid_647_raw.mat'],'Grid_647_raw');
+                        assignin('base','Grid_488_raw', Grid_488_raw)
+                        assignin('base','Grid_647_raw', Grid_647_raw)
+                        % Align the grid, it supports declimals but has to be typed   
+                        OS_Cali_app        
+                    end
                 end
                 
              choice = menu('Press OK after aligment','OK');  
