@@ -24,6 +24,7 @@ elseif ispc
 else
     disp('Platform not supported')
 end
+load('Colormaps.mat')
 
 %1 if you want the program to shutdown the computer after completion
 system_shutdown = 0;
@@ -86,7 +87,7 @@ end
 
 %Image (647 channel) registration
 if ~isfile([selpath, '/', 'Corrections', '/','647_Registration_done.txt'])
-    IMGREG_V2(selpath, Grid_488_raw, Grid_647_reg);
+    IMGREG_V2(selpath, Grid_488_raw, Grid_647_reg, Colormaps);
 end
 
 %Interpolation correction (488 Channel) and dz channel generation
