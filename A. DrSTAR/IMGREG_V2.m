@@ -108,8 +108,10 @@ for i = 1:length(ContentInFold)
                     tform_manual = fitgeotrans(mp, fp, 'lwm', n);
                     I647_manual = imwarp(I_647_raw, tform_manual, 'OutputView', imref2d(I));
                     
+                    Composit_Manual = CompositeRGB(I_488, Colormaps.Cyan,[0 0.3], I647_manual, Colormaps.Magenta, [0 0.3]);
+                    
                     tiledlayout(2,1);
-                    nexttile; imshowpair(imadjust(imgaussfilt(I_488,1)), imadjust(I647_manual), 'ColorChannels', 'green-magenta'); title('Manualy registered');
+                    nexttile; imshow(Composit_Manual); title('Manualy registered');
                     nexttile; imshow(double(I647_manual)./double(imgaussfilt(I_488,1)), [0 3]); title('Manual 647/488 ratio'); hold on; set(gca,'xticklabel',{[]}); set(gca,'yticklabel',{[]})
                     
                     m = input('Do you want  to continue (Y/N):','s');
