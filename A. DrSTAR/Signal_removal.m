@@ -167,7 +167,7 @@ end
 % subplot(2,1,2); imagesc(bbb_smooth,clims); title('Puncta removed'); axis equal;  axis([0 size(AA,2) 0 size(AA,1)]);
 %
 %
-cell_mat2tiff('C:\Users\tnawara\Desktop\Analysis\Cos_7_S045M_Unroof_STARandEPI488_011_647T_PM.tif', PM_only_pic)
+%cell_mat2tiff('C:\Users\tnawara\Desktop\Analysis\Cos_7_S045M_Unroof_STARandEPI488_011_647T_PM.tif', PM_only_pic)
 
 %%%% itrs still notr perfect work on the bliking big poimts next maybe
 %%%% anther mask just for big objects
