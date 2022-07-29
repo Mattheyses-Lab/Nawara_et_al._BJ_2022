@@ -14,8 +14,16 @@ function DrSTAR
 close all
 
 path2code = pwd;
-addpath(genpath([path2code, '\bfmatlab']));
-addpath(genpath([path2code, '\image registration']));
+
+if ismac
+    addpath(genpath([path2code, '/bfmatlab']));
+    addpath(genpath([path2code, '/image registration']));  
+elseif ispc
+    addpath(genpath([path2code, '\bfmatlab']));
+    addpath(genpath([path2code, '\image registration']));
+else
+    disp('Platform not supported')
+end
 
 %1 if you want the program to shutdown the computer after completion
 system_shutdown = 0;
