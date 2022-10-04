@@ -12,7 +12,7 @@
 function dz_channel_generator(yourpath, y)
 
 %gamma value calulted form STAR calculator
-gamma = gamma_calculator(y, yourpath);
+gamma = gamma_calculator(y);
 
 % a blur that will event out the registration on 647 on a 488 channel
 try
