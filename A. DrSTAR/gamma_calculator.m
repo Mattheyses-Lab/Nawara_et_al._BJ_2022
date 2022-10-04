@@ -7,7 +7,7 @@
 %http://creativecommons.org/licenses/by/4.0/ or send a letter to Creative
 %Commons, PO Box 1866, Mountain View, CA 94042, USA.
 
-function [gamma] = gamma_calculator(y, yourpath)
+function [gamma] = gamma_calculator(y)
 lambda_short = 488;     %shorter wavlegth used for imaging
 lambda_long = 647;      %longer wavlegth used for imaging
 n0 = 1;                 %RI of glass
@@ -16,9 +16,9 @@ n2 = 1.37;              %RI of cell
 x = 114;                %distnas from objective to the wall
 
 z = sqrt((x^2) + (y^2));
-sin_alpha = sin(y/z);
+sin_alpha = y/z;
 
-theta = 90 - rad2deg(sin((sin_alpha * n0) / n1));
+theta = 90 - rad2deg(asin((sin_alpha * n0) / n1));
 
 d1 = lambda_short / ((4 * pi) * (sqrt((n1^2) * (sin(deg2rad(theta))^2) - ((n2)^2))));
 d2 = lambda_long / ((4 * pi) * (sqrt((n1^2) * (sin(deg2rad(theta))^2) - ((n2)^2))));
