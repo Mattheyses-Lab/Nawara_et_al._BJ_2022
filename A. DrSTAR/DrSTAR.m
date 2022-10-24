@@ -1,8 +1,9 @@
-%%% Function created by Nawara T. (Mattheyses lab - 05/20/2022) compatible
+%%% Function created by Nawara T. (Mattheyses lab - 10/06/2022) compatible
 %%% with MATLAB R2020b
 %%% Dream STAR
 %%% Data spliting, corection, dz_channel generator, and data export
 %%% package
+%%% Suports data aquired with optosplit or dual-camera systems
 
 %This work is licensed under the Creative Commons Attribution 4.0
 %International License. To view a copy of this license, visit
@@ -17,7 +18,7 @@ path2code = pwd;
 
 if ismac
     addpath(genpath([path2code, '/bfmatlab']));
-    addpath(genpath([path2code, '/image registration']));  
+    addpath(genpath([path2code, '/image registration']));
 elseif ispc
     addpath(genpath([path2code, '\bfmatlab']));
     addpath(genpath([path2code, '\image registration']));
@@ -55,30 +56,65 @@ else
     load([selpath, '/', 'Corrections', '/', 'y.mat'])
 end
 
-%Grid splitting and Optosplit calibration
-if ~isfile([selpath, '/', 'Corrections', '/', 'OS_Calibration_File.mat'])
-    [OS_Calibration_File, Grid_488_raw, Grid_647_reg] = OS_Cali(selpath);
+% Specify whetehr data is aquired using Optosplit (OS) or dual-camera system (DC)
+if ~isfile([selpath, '/', 'Corrections', '/', 'data_type.mat'])
+    data_type = input('Data aquierd using Optosplit or Dual-camera system (OS/DC)?   ','s');
+    data_type_path = [selpath, '/', 'Corrections', '/', 'data_type.mat'];
+    save(data_type_path,'data_type');
 else
-    r_488 = bfGetReader([selpath, '/', 'Corrections', '/', 'Grid_488_raw.tif']);
-    r_647 = bfGetReader([selpath, '/', 'Corrections', '/', 'Grid_647_reg.tif']);
-    Grid_488_raw = bfGetPlane(r_488, 1);
-    Grid_647_reg = bfGetPlane(r_647, 1);
-    load([selpath, '/', 'Corrections', '/', 'OS_Calibration_File.mat'])
+    load([selpath, '/', 'Corrections', '/', 'data_type.mat'])
 end
 
+switch data_type
+    case 'OS'
+        %Grid splitting and Optosplit calibration
+        if ~isfile([selpath, '/', 'Corrections', '/', 'Calibration_File.mat'])
+            [Calibration_File, Grid_488_raw, Grid_647_reg] = OS_Cali(selpath);
+        else
+            r_488 = bfGetReader([selpath, '/', 'Corrections', '/', 'Grid_488_raw.tif']);
+            r_647 = bfGetReader([selpath, '/', 'Corrections', '/', 'Grid_647_reg.tif']);
+            Grid_488_raw = bfGetPlane(r_488, 1);
+            Grid_647_reg = bfGetPlane(r_647, 1);
+            load([selpath, '/', 'Corrections', '/', 'Calibration_File.mat'])
+        end
+        
+    case 'DC'
+        %Grid splitting and Optosplit calibration
+        if ~isfile([selpath, '/', 'Corrections', '/', 'Calibration_File.mat'])
+            [Calibration_File, Grid_488_raw, Grid_647_reg] = DC_Cali(selpath);
+        else
+            r_488 = bfGetReader([selpath, '/', 'Corrections', '/', 'Grid_488_raw.tif']);
+            r_647 = bfGetReader([selpath, '/', 'Corrections', '/', 'Grid_647_reg.tif']);
+            Grid_488_raw = bfGetPlane(r_488, 1);
+            Grid_647_reg = bfGetPlane(r_647, 1);
+            load([selpath, '/', 'Corrections', '/', 'Calibration_File.mat'])
+        end
+end
+            
+
+        
 %Splits flat feilds and generates flat fieds correction files
-if ~isfile([selpath, '/', 'Corrections', '/', 'OS_FF647.tif'])
-    [avg_FFC_488, avg_FFC_647] = FFC_splitter(selpath, OS_Calibration_File);
+if ~isfile([selpath, '/', 'Corrections', '/', 'FF647.tif'])
+    [avg_FFC_488, avg_FFC_647] = FFC_splitter(selpath, Calibration_File);
 else
-    r_488 = bfGetReader([selpath, '/', 'Corrections', '/', 'OS_FF488.tif']);
-    r_647 = bfGetReader([selpath, '/', 'Corrections', '/', 'OS_FF647.tif']);
+    r_488 = bfGetReader([selpath, '/', 'Corrections', '/', 'FF488.tif']);
+    r_647 = bfGetReader([selpath, '/', 'Corrections', '/', 'FF647.tif']);
     avg_FFC_488 = bfGetPlane(r_488, 1);
     avg_FFC_647 = bfGetPlane(r_647, 1);
 end
-
-%Splits live cell imaging data
-if ~isfile([selpath, '/', 'Corrections', '/','Splitting_done.txt'])
-    IMG_splitter(selpath, OS_Calibration_File);
+        
+switch data_type
+    case 'OS'
+        %Splits live cell imaging data
+        if ~isfile([selpath, '/', 'Corrections', '/','Splitting_done.txt'])
+            OS_IMG_splitter(selpath, Calibration_File);
+        end
+        
+    case 'DC'
+        %Splits live cell imaging data
+        if ~isfile([selpath, '/', 'Corrections', '/','Splitting_done.txt'])
+            DC_IMG_splitter(selpath, Calibration_File);
+        end
 end
 
 %Performs background subtraction, FFC, and bleach correction (simple ratio)

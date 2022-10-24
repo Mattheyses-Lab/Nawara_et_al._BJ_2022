@@ -16,7 +16,7 @@ function data_org_for_CMEanalysis(yourpath)
 dd = 1;
 frame_rate = 0.3;
 
-ContentInFold = dir(yourpath);
+ContentInFold = dir([yourpath, '/Data_analysis']);
 mkdir([yourpath, '/', 'For_CMEanalysis']);
 
     
@@ -29,9 +29,9 @@ mkdir([yourpath, '/', 'For_CMEanalysis']);
             mkdir(dir_Ch1)
             mkdir(dir_Ch2)
             mkdir(dir_Ch3)
-            T488_Cor_Blur_path = [yourpath, '/', 'Data_analysis', '/', ContentInFold(i).name(1:end-4), '/', ContentInFold(i).name(1:end-4), '_488_Cor_Blur.tif'];
-            T647_Cor_Reg_path = [yourpath, '/', 'Data_analysis', '/', ContentInFold(i).name(1:end-4), '/', ContentInFold(i).name(1:end-4), '_647_Cor_Reg.tif'];
-            dz_channel_path = [yourpath, '/', 'Data_analysis', '/', ContentInFold(i).name(1:end-4), '/', ContentInFold(i).name(1:end-4), '_dz_channel.tif'];
+            T488_Cor_Blur_path = [yourpath, '/', 'Data_analysis', '/', ContentInFold(i).name, '/', ContentInFold(i).name, '_488_Cor_Blur.tif'];
+            T647_Cor_Reg_path = [yourpath, '/', 'Data_analysis', '/', ContentInFold(i).name, '/', ContentInFold(i).name, '_647_Cor_Reg.tif'];
+            dz_channel_path = [yourpath, '/', 'Data_analysis', '/', ContentInFold(i).name, '/', ContentInFold(i).name, '_dz_channel.tif'];
             movefile(T488_Cor_Blur_path, dir_Ch1);
             movefile(T647_Cor_Reg_path, dir_Ch2);
             movefile(dz_channel_path, dir_Ch3);

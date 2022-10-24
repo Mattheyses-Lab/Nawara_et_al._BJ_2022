@@ -7,7 +7,7 @@
 %http://creativecommons.org/licenses/by/4.0/ or send a letter to Creative
 %Commons, PO Box 1866, Mountain View, CA 94042, USA.
 
-function [OS_Calibration_File, Grid_488_raw, Grid_647_reg] = OS_Cali(yourpath)
+function [Calibration_File, Grid_488_raw, Grid_647_reg] = OS_Cali(yourpath)
 
 ContentInFold = dir(yourpath);
     for i = 1:length(ContentInFold)
@@ -41,7 +41,7 @@ ContentInFold = dir(yourpath);
                         assignin('base','Grid_488_raw', Grid_488_raw)
                         assignin('base','Grid_647_raw', Grid_647_raw)
                         % Align the grid, it supports declimals but has to be typed   
-                        OS_Cali_app        
+                        Cali_app        
                     end
                 end
                 
@@ -68,14 +68,14 @@ ContentInFold = dir(yourpath);
              delete([yourpath, '/', 'Corrections', '/','Grid_647_raw.mat'])
              delete([yourpath, '/', 'Corrections', '/','Grid_488_raw.mat'])
              %save([yourpath, '/', 'Corrections', '/','Grid_647_reg.mat'], 'Grid_647_reg');
-             OS_Calibration_File = [roi1.Position; roi2.Position];
+             Calibration_File = [roi1.Position; roi2.Position];
              %calibation file col1 is for 488 = X, Y, then the amount you need to add to X
              %tohave botm of ROI and then same but for Y, col2 is for 647
              path488 = [yourpath, '/', 'Corrections', '/','Grid_488_raw.tif'];
              path647 = [yourpath, '/', 'Corrections', '/','Grid_647_reg.tif'];
              cell_mat2tiff(path488, Grid_488_raw)
              cell_mat2tiff(path647, Grid_647_reg)
-             save([yourpath, '/', 'Corrections', '/','OS_Calibration_File.mat'],'OS_Calibration_File');
+             save([yourpath, '/', 'Corrections', '/','Calibration_File.mat'],'Calibration_File');
              close all
         end
     end

@@ -8,7 +8,7 @@
 %http://creativecommons.org/licenses/by/4.0/ or send a letter to Creative
 %Commons, PO Box 1866, Mountain View, CA 94042, USA.
 
-function [avg_FFC_488, avg_FFC_647] = FFC_splitter(yourpath, OS_Calibration_File)
+function [avg_FFC_488, avg_FFC_647] = FFC_splitter(yourpath, Calibration_File)
 
 ContentInFold = dir(yourpath);
 sigma = 10;
@@ -23,8 +23,8 @@ sigma = 10;
             
             %FFC 488 processing
             for ii = 1:length(whole_img{1, 1}) %splitting image based on ROI data from OS_cali.m
-                T488_raw{ii,1} = uint16(zeros(OS_Calibration_File(1,4)+1, OS_Calibration_File(1,3)+1));
-                T488_raw{ii,1} = whole_img{1,1}{ii,1}(OS_Calibration_File(1,2):(OS_Calibration_File(1,2)+OS_Calibration_File(1,4)),OS_Calibration_File(1,1):(OS_Calibration_File(1,1)+OS_Calibration_File(1,3)));
+                T488_raw{ii,1} = uint16(zeros(Calibration_File(1,4)+1, Calibration_File(1,3)+1));
+                T488_raw{ii,1} = whole_img{1,1}{ii,1}(Calibration_File(1,2):(Calibration_File(1,2)+Calibration_File(1,4)),Calibration_File(1,1):(Calibration_File(1,1)+Calibration_File(1,3)));
             end
             
             T488_raw = cat(3,T488_raw{:});
@@ -43,8 +43,8 @@ sigma = 10;
            
             %FFC 647 processing
             for ii = 1:length(whole_img{1, 1}) %splitting image based on ROI data from OS_cali.m
-                T647_raw{ii,1} = zeros(OS_Calibration_File(2,4)+1, OS_Calibration_File(2,3)+1);
-                T647_raw{ii,1} = whole_img{1,1}{ii,1}(OS_Calibration_File(2,2):(OS_Calibration_File(2,2)+OS_Calibration_File(2,4)),OS_Calibration_File(2,1):(OS_Calibration_File(2,1)+OS_Calibration_File(2,3)));              
+                T647_raw{ii,1} = zeros(Calibration_File(2,4)+1, Calibration_File(2,3)+1);
+                T647_raw{ii,1} = whole_img{1,1}{ii,1}(Calibration_File(2,2):(Calibration_File(2,2)+Calibration_File(2,4)),Calibration_File(2,1):(Calibration_File(2,1)+Calibration_File(2,3)));              
             end
             
             T647_raw = cat(3,T647_raw{:});

@@ -22,18 +22,18 @@ catch
 end
 
 % Get all the subfolders
-ContentInFold = dir(yourpath);
+ContentInFold = dir([yourpath, '/Data_analysis']);
 
 parfor i = 1:length(ContentInFold)
     if strfind(ContentInFold(i).name, 'STAR') >= 1
-        T488_cor_path = [yourpath, '/', 'Data_analysis', '/', ContentInFold(i).name(1:end-4), '/', ContentInFold(i).name(1:end-4), '_488_Cor.tif'];
-        T647_cor_reg_path = [yourpath, '/', 'Data_analysis', '/', ContentInFold(i).name(1:end-4), '/', ContentInFold(i).name(1:end-4), '_647_Cor_Reg.tif'];
-        fn488 = [yourpath, '/', 'Data_analysis', '/', ContentInFold(i).name(1:end-4), '/', ContentInFold(i).name(1:end-4), '_488_Cor_Blur.tif'];
-        PMfn488 = [yourpath, '/', 'Data_analysis', '/', ContentInFold(i).name(1:end-4), '/', ContentInFold(i).name(1:end-4), '_488_PM.tif'];
-        PMfn488_signal = [yourpath, '/', 'Data_analysis', '/', ContentInFold(i).name(1:end-4), '/', ContentInFold(i).name(1:end-4), '_488_Signal_mask.tif'];
-        PMfn647 = [yourpath, '/', 'Data_analysis', '/', ContentInFold(i).name(1:end-4), '/', ContentInFold(i).name(1:end-4), '_647_PM.tif'];
-        fndz = [yourpath, '/', 'Data_analysis', '/', ContentInFold(i).name(1:end-4), '/', ContentInFold(i).name(1:end-4), '_dz_channel.tif'];
-        path_cell_mask = [yourpath, '/', 'Data_analysis', '/', ContentInFold(i).name(1:end-4), '/', ContentInFold(i).name(1:end-4), '_cell_mask.tif'];
+        T488_cor_path = [yourpath, '/', 'Data_analysis', '/', ContentInFold(i).name, '/', ContentInFold(i).name, '_488_Cor.tif'];
+        T647_cor_reg_path = [yourpath, '/', 'Data_analysis', '/', ContentInFold(i).name, '/', ContentInFold(i).name, '_647_Cor_Reg.tif'];
+        fn488 = [yourpath, '/', 'Data_analysis', '/', ContentInFold(i).name, '/', ContentInFold(i).name, '_488_Cor_Blur.tif'];
+        PMfn488 = [yourpath, '/', 'Data_analysis', '/', ContentInFold(i).name, '/', ContentInFold(i).name, '_488_PM.tif'];
+        PMfn488_signal = [yourpath, '/', 'Data_analysis', '/', ContentInFold(i).name, '/', ContentInFold(i).name, '_488_Signal_mask.tif'];
+        PMfn647 = [yourpath, '/', 'Data_analysis', '/', ContentInFold(i).name, '/', ContentInFold(i).name, '_647_PM.tif'];
+        fndz = [yourpath, '/', 'Data_analysis', '/', ContentInFold(i).name, '/', ContentInFold(i).name, '_dz_channel.tif'];
+        path_cell_mask = [yourpath, '/', 'Data_analysis', '/', ContentInFold(i).name, '/', ContentInFold(i).name, '_cell_mask.tif'];
         
         if ~exist(fndz, 'file')
             if exist(fn488, 'file')

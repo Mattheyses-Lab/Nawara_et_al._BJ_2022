@@ -12,15 +12,15 @@ function IMG_processing(yourpath, avg_FFC_488, avg_FFC_647)
 
     max_FFC_488 = max(avg_FFC_488(:));
     max_FFC_647 = max(avg_FFC_647(:));
-    ContentInFold = dir(yourpath);
+    ContentInFold = dir([yourpath, '/Data_analysis']);
     background_488 = zeros(length(ContentInFold),1);
     background_647 = zeros(length(ContentInFold),1);
     
     %Pick background ROIs for a cellthen press OK 
     for i = 1:length(ContentInFold)
         if strfind(ContentInFold(i).name, 'STAR') >= 1
-            T488_raw_path = [yourpath, '/', 'Data_analysis', '/', ContentInFold(i).name(1:end-4), '/', ContentInFold(i).name(1:end-4), '_488_Raw.tif'];
-            T647_raw_path = [yourpath, '/', 'Data_analysis', '/', ContentInFold(i).name(1:end-4), '/', ContentInFold(i).name(1:end-4), '_647_Raw.tif'];
+            T488_raw_path = [yourpath, '/', 'Data_analysis', '/', ContentInFold(i).name, '/', ContentInFold(i).name, '_488_Raw.tif'];
+            T647_raw_path = [yourpath, '/', 'Data_analysis', '/', ContentInFold(i).name, '/', ContentInFold(i).name, '_647_Raw.tif'];
             r_488 = bfGetReader(T488_raw_path);
             I_488 = bfGetPlane(r_488, 1);
             r_647 = bfGetReader(T647_raw_path);
@@ -42,7 +42,7 @@ fprintf('Background selection compleated')
     parfor (i = 1:length(ContentInFold))
         if strfind(ContentInFold(i).name, 'STAR') >= 1 
             %488 processing
-            T488_raw_path = [yourpath, '/', 'Data_analysis', '/', ContentInFold(i).name(1:end-4), '/', ContentInFold(i).name(1:end-4), '_488_Raw.tif'];
+            T488_raw_path = [yourpath, '/', 'Data_analysis', '/', ContentInFold(i).name, '/', ContentInFold(i).name, '_488_Raw.tif'];
             T488_raw = bfopen(T488_raw_path);
             T488_cor = cell(size(T488_raw{1,1},1),1);%fixed length2size 020322 will work 1 picture images   
             
@@ -60,14 +60,14 @@ fprintf('Background selection compleated')
                 T488_cor{ii, 1} = T488_raw{1,1}{ii, 1} .* ratio; %Bleach correction
             end
                  
-            fn488 = [yourpath, '/', 'Data_analysis', '/', ContentInFold(i).name(1:end-4), '/', ContentInFold(i).name(1:end-4), '_488_Cor.tif'];
+            fn488 = [yourpath, '/', 'Data_analysis', '/', ContentInFold(i).name, '/', ContentInFold(i).name, '_488_Cor.tif'];
             cell_mat2tiff(fn488, T488_cor)
             T488_raw = [];
             T488_cor = [];
             
         
             %647 processing
-            T647_raw_path = [yourpath, '/', 'Data_analysis', '/', ContentInFold(i).name(1:end-4), '/', ContentInFold(i).name(1:end-4), '_647_Raw.tif'];
+            T647_raw_path = [yourpath, '/', 'Data_analysis', '/', ContentInFold(i).name, '/', ContentInFold(i).name, '_647_Raw.tif'];
             T647_raw = bfopen(T647_raw_path);
             T647_cor = cell(size(T647_raw{1,1},1),1); %fixed length2size 020322 will work 1 picture images   
             
@@ -85,7 +85,7 @@ fprintf('Background selection compleated')
                 T647_cor{ii, 1} = T647_raw{1,1}{ii, 1} .* ratio; %Bleach correction
             end
             
-            fn647 = [yourpath, '/', 'Data_analysis', '/', ContentInFold(i).name(1:end-4), '/', ContentInFold(i).name(1:end-4), '_647_Cor.tif'];
+            fn647 = [yourpath, '/', 'Data_analysis', '/', ContentInFold(i).name, '/', ContentInFold(i).name, '_647_Cor.tif'];
             cell_mat2tiff(fn647, T647_cor)
             T647_raw = [];
             T647_cor = [];    
@@ -93,11 +93,3 @@ fprintf('Background selection compleated')
     end
     writematrix([], [yourpath, '/', 'Corrections', '/','Corrections_done.txt']); %added 032122 for automation if somehting gees wrong
 end
-
-
-    
-    
-   
-    
-    
-    

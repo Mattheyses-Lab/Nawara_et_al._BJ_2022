@@ -29,20 +29,20 @@ function IMGREG_V2(yourpath, Grid_488_raw, Grid_647_reg, Colormaps)
 
 stop_it_please = 0; % while loop for registration
 
-ContentInFold = dir(yourpath);
+ContentInFold = dir([yourpath, '/Data_analysis']);
 
 % registration mask generation for every cell
 for i = 1:length(ContentInFold)
     if strfind(ContentInFold(i).name, 'STAR') >= 1
-        T488_cor_path = [yourpath, '/', 'Data_analysis', '/', ContentInFold(i).name(1:end-4), '/', ContentInFold(i).name(1:end-4), '_488_Cor.tif'];
-        T647_cor_path = [yourpath, '/', 'Data_analysis', '/', ContentInFold(i).name(1:end-4), '/', ContentInFold(i).name(1:end-4), '_647_Cor.tif'];
-        fn647 = [yourpath, '/', 'Data_analysis', '/', ContentInFold(i).name(1:end-4), '/', ContentInFold(i).name(1:end-4), '_647_Cor_Reg.tif'];
-        tform_path = [yourpath, '/', 'Data_analysis', '/', ContentInFold(i).name(1:end-4), '/' ContentInFold(i).name(1:end-4), '_tform.mat'];
-        fig_path = [yourpath, '/', 'Data_analysis', '/', ContentInFold(i).name(1:end-4), '/' ContentInFold(i).name(1:end-4), '_reg_fig.png'];
+        T488_cor_path = [yourpath, '/', 'Data_analysis', '/', ContentInFold(i).name, '/', ContentInFold(i).name, '_488_Cor.tif'];
+        T647_cor_path = [yourpath, '/', 'Data_analysis', '/', ContentInFold(i).name, '/', ContentInFold(i).name, '_647_Cor.tif'];
+        fn647 = [yourpath, '/', 'Data_analysis', '/', ContentInFold(i).name, '/', ContentInFold(i).name, '_647_Cor_Reg.tif'];
+        tform_path = [yourpath, '/', 'Data_analysis', '/', ContentInFold(i).name, '/' ContentInFold(i).name, '_tform.mat'];
+        fig_path = [yourpath, '/', 'Data_analysis', '/', ContentInFold(i).name, '/' ContentInFold(i).name, '_reg_fig.png'];
         
         %loads existing tform
         if exist(tform_path ,'file')
-            load(tform_path); %%%%
+            load(tform_path);
             I = size(Grid_488_raw);
             
         else
@@ -134,9 +134,9 @@ end
 %image regsitraiton
 parfor i = 1:length(ContentInFold)
     if strfind(ContentInFold(i).name, 'STAR') >= 1
-        T647_cor_path = [yourpath, '/', 'Data_analysis', '/', ContentInFold(i).name(1:end-4), '/', ContentInFold(i).name(1:end-4), '_647_Cor.tif'];
-        fn647 = [yourpath, '/', 'Data_analysis', '/', ContentInFold(i).name(1:end-4), '/', ContentInFold(i).name(1:end-4), '_647_Cor_Reg.tif']; %%%%
-        tform_path = [yourpath, '/', 'Data_analysis', '/', ContentInFold(i).name(1:end-4), '/' ContentInFold(i).name(1:end-4), '_tform.mat'];
+        T647_cor_path = [yourpath, '/', 'Data_analysis', '/', ContentInFold(i).name, '/', ContentInFold(i).name, '_647_Cor.tif'];
+        fn647 = [yourpath, '/', 'Data_analysis', '/', ContentInFold(i).name, '/', ContentInFold(i).name, '_647_Cor_Reg.tif']; %%%%
+        tform_path = [yourpath, '/', 'Data_analysis', '/', ContentInFold(i).name, '/' ContentInFold(i).name, '_tform.mat'];
         tform = load(tform_path);
         tform = tform.tform;
         
