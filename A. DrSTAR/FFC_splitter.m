@@ -31,7 +31,7 @@ sigma = 10;
             avg_FFC_488 = mean(T488_raw,3);
             avg_FFC_488 = imgaussfilt(avg_FFC_488, sigma);  %added as the uSlides have some pores 020822 TN
             
-            fn488 = [yourpath, '/', 'Corrections', '/', ContentInFold(i).name(1:end-8), '.tif']; %032122 chaged the saving name TN
+            fn488 = [yourpath, '/', 'Corrections', '/', ContentInFold(i).name(4:end-8), '.tif']; %032122 chaged the saving name TN
             cell_mat2tiff(fn488, avg_FFC_488)
             %save(fn488,'avg_FFC_488', '-v7.3');
             
@@ -51,7 +51,7 @@ sigma = 10;
             avg_FFC_647 = mean(T647_raw,3);
             avg_FFC_647 = imgaussfilt(avg_FFC_647, sigma); %added as the uSlides have some pores 020822 TN
             
-            fn647 = [yourpath, '/', 'Corrections', '/', ContentInFold(i).name(1:end-8), '.tif']; %032122 chaged the saving name TN
+            fn647 = [yourpath, '/', 'Corrections', '/', ContentInFold(i).name(4:end-8), '.tif']; %032122 chaged the saving name TN
             cell_mat2tiff(fn647, avg_FFC_647)
             %save(fn647,'avg_FFC_647', '-v7.3');
         end    
